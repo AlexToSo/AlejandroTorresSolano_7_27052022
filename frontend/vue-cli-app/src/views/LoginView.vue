@@ -1,13 +1,13 @@
 <template>
     <main>
         <p>
-            Vous êtes sur la page de Groupomania
+            Vous êtes sur la page de Login
         </p>
     </main>
 </template>
 
 <script>
 export default {
-  name: 'HomeView'
+  name: 'LoginView'
 }
 </script>
