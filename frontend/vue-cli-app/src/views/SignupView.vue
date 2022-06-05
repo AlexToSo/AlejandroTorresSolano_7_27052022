@@ -1,13 +1,23 @@
 <template>
     <main>
-        <p>
-            Vous êtes sur la page de Sign up
-        </p>
+        <form>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+            </div>
+            <button>Sign up</button>
+            <!-- <p class="text-danger" v-if="errorMsg">{{ errorMsg }}</p> -->
+        </form>
     </main>
 </template>
 
 <script>
+
 export default {
-  name: 'SignupView'
+    name: 'SignupView'
 }
 </script>

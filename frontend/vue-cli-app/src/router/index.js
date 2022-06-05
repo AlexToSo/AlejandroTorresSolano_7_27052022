@@ -5,6 +5,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
+    meta: { title: 'Groupomania' },
     component: HomeView
   },
   {
@@ -16,12 +17,27 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: () => import('../views/SignupView.vue')
+  },
+  {
+    path: '/posts',
+    name: 'posts',
+    component: () => import('../views/PostsView.vue')
+  },
+  {
+    path: '/new-post',
+    name: 'new-post',
+    component: () => import('../views/NewPostView.vue')
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((toRoute,fromRoute,next) => {
+  window.document.title = toRoute.meta.title;
+  next();
 })
 
 export default router

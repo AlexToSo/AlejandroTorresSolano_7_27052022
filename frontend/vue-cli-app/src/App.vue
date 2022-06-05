@@ -1,31 +1,27 @@
 <template>
 
-  <head>
-    <title>Groupomania</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet">
+  <!-- <head> -->
+    <!-- <title>Groupomania</title> -->
+    <!-- <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-  </head>
-<body>
-  <HeaderItem />
-  <NavItem />
-  <router-view />
-</body>
-  
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/posts">Posts</router-link>
-  </nav> -->
-  <!-- <router-view /> -->
+  <!-- </head> -->
+
+  <!-- <body> -->
+    <HeaderItem />
+    <NavItem />
+    <router-view />
+  <!-- </body> -->
+
 </template>
 
 <script>
-// @ is an alias to /src
-import HeaderItem from './components/HeaderItem.vue'
-import NavItem from './components/NavItem.vue'
+
+import HeaderItem from '@/components/HeaderItem.vue'
+import NavItem from '@/components/NavItem.vue'
 
 export default {
   name: 'App',
