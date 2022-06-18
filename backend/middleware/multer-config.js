@@ -12,11 +12,9 @@ const storage = multer.diskStorage({
         callback(null, 'images');
     },
     filename: (req, file, callback) => {
-        // console.log(file);
-        // console.log(JSON.parse(req.body));
+        console.log(req.body);
         const extension = MIME_TYPES[file.mimetype];
-        // const name = JSON.parse(req.body.post).id;
-        const name = req.body.user_id;
+        const name = req.auth.user_id;
         callback(null, name + '_' + Date.now() + '.' + extension);
     }
 });

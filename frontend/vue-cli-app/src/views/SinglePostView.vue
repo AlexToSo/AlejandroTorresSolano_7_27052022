@@ -1,10 +1,10 @@
 <template>
     <div>
         <p v-if="message">{{ message }}</p>
-        <section v-if="postList.length > 0">
-            <h2> Posts </h2>
-            <PostItem v-for="post in postList" :key="post.id" :postId="post.id" :postName="post.name"
-                :postText="post.text" :postAuthor="post.email" />
+        <section v-if="post">
+            <h2> Post </h2>
+            <PostItem :key="post.id" :postId="post.id" :postName="post.name" :postText="post.text"
+                :postAuthor="post.email" />
         </section>
     </div>
 
@@ -15,13 +15,17 @@ import PostItem from "../components/PostItem"
 import { mapState } from 'vuex'
 
 export default {
-    name: 'PostsView',
+    name: 'SinglePostView',
     components: {
         PostItem
     },
     data() {
         return {
-            postList: [],
+            post: {
+                id: 0,
+                name: "",
+                text: "",
+            },
             message: "",
         }
     },
@@ -33,16 +37,16 @@ export default {
     async beforeMount() {
         const myHeaders = new Headers();
         myHeaders.append('Authorization', `Token ${this.token}`);
+        const postId = this.$route.params.id;
         try {
-            const response = await fetch('http://localhost:3000/api/posts', {
+            const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
                 method: 'GET',
                 headers: myHeaders,
             });
-            this.postList = await response.json();
-            if (this.postList.error) throw this.postList.error;
+            this.post = await response.json();
+            if (this.post.error) throw this.post.error;
         }
         catch (error) { this.message = error }
     }
-
 }
 </script>

@@ -1,45 +1,31 @@
 import { createStore } from 'vuex'
-import router from '@/router'
 
 export default createStore({
   state: {
     isAuth: false,
+    token: "",
+    user_id: 0
   },
 
   getters: {
   },
 
   mutations: {
+    SAVE_AUTH(state, [token, user_id]) {
+      state.token = token;
+      state.user_id = user_id;
+      state.isAuth = true;
+    }
   },
 
   actions: {
-    onLogin(context) {
-      context.state.isAuth = true;
-      router.push('posts');
-    },
-
+    // Dois-je gérer la fonctionnalité de log out automatique après un certain temps?
+    // Oui, je dois lire a chaque requete post la réponse pour voir s'il y a une erreur 401, et dans ce cas la, faire appel a onLogout
     onLogout(context) {
+      context.state.token = "";
+      context.state.user_id = 0;
       context.state.isAuth = false;
     },
-
-    // onSignup(context, email, password) {
-    //   try {
-    //     let response = await fetch('http://localhost:3000/api/auth/signup', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify({ email, password })
-    //     })
-    //     if (response.ok) {
-    //       return response.json()
-    //     }
-    //   }
-    //   catch (err) {
-    //     console.log('Erreur ' + err)
-    //   }
-    // }
   },
 
   modules: {
