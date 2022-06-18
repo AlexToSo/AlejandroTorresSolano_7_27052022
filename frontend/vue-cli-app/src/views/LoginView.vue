@@ -1,5 +1,6 @@
 <template>
-    <main>
+    <section class="connection">
+        <h1> Login </h1>
         <form @submit.prevent="onLogin(email, password)">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -12,7 +13,7 @@
             <button :disabled="!validForm">Login</button>
             <p v-if="message">{{ message }}</p>
         </form>
-    </main>
+    </section>
 </template>
 
 <script>

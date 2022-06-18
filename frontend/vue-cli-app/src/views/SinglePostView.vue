@@ -1,12 +1,13 @@
 <template>
-    <div>
-        <p v-if="message">{{ message }}</p>
-        <section v-if="post">
-            <h2> Post </h2>
+    <section class="posts">
+        <h1> Post </h1>
+        <div v-if="post">
+            <p v-if="message">{{ message }}</p>
             <PostItem :key="post.id" :postId="post.id" :postName="post.name" :postText="post.text"
                 :postAuthor="post.email" />
-        </section>
-    </div>
+            <div v-if="post.user_id == user_id">message secret</div>
+        </div>
+    </section>
 
 </template>
 
@@ -30,7 +31,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['token'])
+        ...mapState(['token', 'user_id'])
     },
     methods: {
     },

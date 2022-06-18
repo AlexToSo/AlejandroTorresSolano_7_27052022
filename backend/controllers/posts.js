@@ -41,8 +41,9 @@ exports.getOnePost = async (req, res, next) => {
  * @param { Method } next
  */
 exports.createPost = async (req, res, next) => {
-    console.log(req.body);
-    const postObject = req.body.image
+    // console.log(req.body);
+    // const postObject = req.body.image
+    const postObject = false
         // ? { ...JSON.parse(req.body.post), image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
         ? { ...req.body, image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
         : { ...req.body };

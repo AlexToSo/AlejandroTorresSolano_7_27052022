@@ -1,24 +1,14 @@
 <template>
     <nav>
-        <ul class="posts-nav" v-if="isAuth">
-            <li>
-                <router-link to="/posts">View posts</router-link>
-            </li>
-            <li>
-                <router-link to="/new-post">New post</router-link>
-            </li>
-            <li>
-                <router-link to="/" @click="onLogout">Log out</router-link>
-            </li>
-        </ul>
-        <ul class="connection-nav" v-else>
-            <li>
-                <router-link to="/signup">Sign up</router-link>
-            </li>
-            <li>
-                <router-link to="/login">Login</router-link>
-            </li>
-        </ul>
+        <div class="nav-group" v-if="isAuth">
+            <router-link to="/posts" class="nav-group__link link">View posts</router-link>
+            <router-link to="/new-post" class="nav-group__link link">New post</router-link>
+            <router-link to="/" @click="onLogout" class="nav-group__link link">Log out</router-link>
+        </div>
+        <div class="nav-group" v-else>
+            <router-link to="/signup" class="nav-group__link link">Sign up</router-link>
+            <router-link to="/login" class="nav-group__link link">Login</router-link>
+        </div>
     </nav>
 </template>
 
@@ -36,3 +26,20 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    // text-align: center;
+}
+
+.nav-group {
+    margin: 1rem;
+    &__link {
+        margin: 1rem;
+    }
+}
+</style>

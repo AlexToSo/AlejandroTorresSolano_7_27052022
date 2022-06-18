@@ -1,9 +1,7 @@
 <template>
-    <main>
-        <p>
-            Vous êtes sur la page de Groupomania
-        </p>
-    </main>
+    <p>
+        Groupomania is the social network of the future
+    </p>
 </template>
 
 <script>

@@ -9,14 +9,11 @@
 <script>
 export default {
     name: 'HeaderItem'
-    //   props: {
-    // msg: String
-    //   }
 }
 </script>
 
 <style lang="scss">
-h1 {
-    margin: 40px 0 0;
+header {
+    margin: 2rem 0 2rem 0;
 }
 </style>

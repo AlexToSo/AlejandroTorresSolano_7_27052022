@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <p v-if="message">{{ message }}</p>
-        <section v-if="postList.length > 0">
-            <h2> Posts </h2>
+    <section class="posts">
+        <h1> Posts </h1>
+        <div v-if="postList.length > 0">
+            <p v-if="message">{{ message }}</p>
             <PostItem v-for="post in postList" :key="post.id" :postId="post.id" :postName="post.name"
                 :postText="post.text" :postAuthor="post.email" />
-        </section>
-    </div>
+        </div>
+    </section>
 
 </template>
 
@@ -46,3 +46,10 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+.posts {
+    width: 90%;
+    max-width: 40rem;
+}
+</style>

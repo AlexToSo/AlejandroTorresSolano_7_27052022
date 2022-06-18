@@ -1,20 +1,15 @@
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-  <!-- <head> -->
-    <!-- <title>Groupomania</title> -->
-    <!-- <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-  <!-- </head> -->
-
-  <!-- <body> -->
+  <div class="page">
     <HeaderItem />
     <NavItem />
-    <router-view />
-  <!-- </body> -->
+    <main>
+      <router-view />
+    </main>
+  </div>
 
 </template>
 
@@ -34,23 +29,32 @@ export default {
 
 <style lang="scss">
 #app {
-  // font-family: Avenir, Helvetica, Arial, sans-serif;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  // color: #2c3e50;
+  font-family: Lato, sans-serif;
+  color: #4E5166;
 }
 
-// nav {
-//   padding: 30px;
+.link {
+  color: black;
+  text-decoration: none;
+}
 
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
+h1 {
+  color: #FD2D01;
+}
+
+main {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 </style>
