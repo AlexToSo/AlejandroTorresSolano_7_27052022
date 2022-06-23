@@ -32,6 +32,11 @@ const routes = [
     path: '/new-post',
     name: 'new-post',
     component: () => import('../views/NewPostView.vue')
+  },
+  {
+    path: '/modify-post/:id',
+    name: 'modify-post',
+    component: () => import('../views/ModifyPostView.vue')
   }
 ]
 
@@ -40,7 +45,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((toRoute,fromRoute,next) => {
+router.beforeEach((toRoute, fromRoute, next) => {
   window.document.title = toRoute.meta.title;
   next();
 })

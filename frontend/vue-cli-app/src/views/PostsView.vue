@@ -1,10 +1,10 @@
 <template>
     <section class="posts">
         <h1> Posts </h1>
-        <div v-if="postList.length > 0">
+        <div class="posts__list" v-if="postList.length > 0">
             <p v-if="message">{{ message }}</p>
             <PostItem v-for="post in postList" :key="post.id" :postId="post.id" :postName="post.name"
-                :postText="post.text" :postAuthor="post.email" />
+                :postText="post.text" :postImage="post.image_url" :postAuthor="post.email" :showLike="showLike"/>
         </div>
     </section>
 
@@ -23,6 +23,7 @@ export default {
         return {
             postList: [],
             message: "",
+            showLike: false
         }
     },
     computed: {
@@ -51,5 +52,10 @@ export default {
 .posts {
     width: 90%;
     max-width: 40rem;
+    &__list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>

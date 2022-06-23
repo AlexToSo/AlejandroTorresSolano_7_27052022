@@ -1,11 +1,7 @@
 <template>
     <article class="post-prev">
         <router-link class="link" :to="'/single-post/' + postId">
-            <!-- <a :href="werwer"> -->
-            <!-- <a :href="'/api/posts/single-post/' + postId"> -->
-            <div class="post-prev__image">
-                <!-- <img :src="imageSource"> -->
-            </div>
+            <img class="post-prev__image" :src="postImage">
             <div class="post-prev__text">
                 <div>
                     <h2>{{ postName }}</h2>
@@ -14,19 +10,18 @@
                         {{ postText }}
                     </p>
                 </div>
-                <!-- <div class="heart">
-                    <i class="far fa-heart"></i>
-                    <i class="fas fa-heart heart__bg"></i>
-                </div> -->
+                <div v-if="showLike" class="heart">
+                    <i v-if="!liked" class="far fa-heart" @click="addReaction(1)"></i>
+                    <i v-else class="fas fa-heart" @click="addReaction(0)"></i>
+                </div>
             </div>
-            <!-- </a> -->
-
         </router-link>
     </article>
 </template>
 
 <script>
-import router from '@/router'
+import { mapState } from 'vuex'
+// import router from '@/router'
 
 export default {
     name: 'PostItem',
@@ -47,51 +42,83 @@ export default {
             type: String,
             required: true
         },
+        postImage: {
+            type: undefined,
+            required: true
+        },
         postAuthor: {
             type: String,
             required: false
+        },
+        showLike: {
+            type: Boolean,
+            required: true
+        },
+        liked: {
+            type: Boolean,
+            require: false
         }
     },
+    computed: {
+        ...mapState(['token'])
+    },
     methods: {
-        // ...mapActions(["onLogin"]),
-        // ...mapActions(['setToken']),
-
-        onClick(postId) {
-            console.log(postId)
-            // router.push({ name: 'single-post', params: {id: postId}});
-            router.push({ path: `/single-post/${postId}` });
-
-            // input type = field ==> vue input field
-            // regex email
+        async addReaction(like) {
+            this.$emit('addReaction', like)
         }
     }
 }
 </script>
 
 <style lang="scss">
-.post-prev {
-    margin: 3rem 0 3rem 0;
-    background-color: white;
-    overflow: hidden;
-    border-radius: 1rem;
-    border: 0.5rem solid #FFD7D7;
-    box-shadow: 0 0.5rem 2rem #656565;
+// .post-prev {
+//     margin: 3rem 0 3rem 0;
+//     background-color: white;
+//     overflow: hidden;
+//     border-radius: 1rem;
+//     border: 0.5rem solid #FFD7D7;
+//     box-shadow: 0 0.5rem 2rem #656565;
 
-    // &__image {
-    //     height: 30rem;
-    //     @include img-ratio;
-    // }
+//     &__image {
+//         height: 30rem;
+//         overflow: hidden;
+//         position: relative;
+
+//         & img {
+//             position: absolute;
+//             top: 50%;
+//             left: 50%;
+//             transform: translate(-50%, -50%);
+//         }
+//     }
+
+//     &__text {
+//         padding: 2rem;
+//         position: relative;
+//         overflow: hidden;
+
+//         h2,
+//         p {
+//             white-space: nowrap;
+//             overflow: hidden;
+//             text-overflow: ellipsis;
+//         }
+//     }
+// }
+
+.post-prev {
+    width: 80%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+
+    &__image {
+        width: 100%;
+    }
 
     &__text {
-        padding: 2rem;
-        position: relative;
-        overflow: hidden;
-        h2,
-        p {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        text-align: center;
+        padding: 10px 20px;
     }
 }
 </style>

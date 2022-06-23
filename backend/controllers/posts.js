@@ -8,7 +8,7 @@ const fs = require('fs');
  */
 exports.getAllPosts = async (req, res, next) => {
     try {
-        const [result, fields] = await mysql.query('SELECT post.id, post.text, post.image_url, post.name, user.email FROM post JOIN user ON post.user_id = user.id');
+        const [result, fields] = await mysql.query('SELECT post.id, post.text, post.image_url, post.name, user.email FROM post JOIN user ON post.user_id = user.id ORDER BY post.id DESC');
         res.status(200).json(result);
     }
     catch (e) { res.status(500).json({ error: e.message }); }
@@ -41,9 +41,8 @@ exports.getOnePost = async (req, res, next) => {
  * @param { Method } next
  */
 exports.createPost = async (req, res, next) => {
-    // console.log(req.body);
-    // const postObject = req.body.image
-    const postObject = false
+    const postObject = req.body.image
+        // const postObject = false
         // ? { ...JSON.parse(req.body.post), image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
         ? { ...req.body, image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
         : { ...req.body };
@@ -84,9 +83,14 @@ exports.createPostReaction = async (req, res, next) => {
  */
 exports.modifyPost = async (req, res, next) => {
     try {
-        const [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ? AND user_id = ?', [req.params.id, req.auth.user_id]);
-        if (!old_post[0]) return res.status(401).json({ error: 'Post doesn\'t exists or doesn\'t belong to user' })
-
+        let [old_post, old_post_fields] = [];
+        if (req.auth.user_id !== 0) {
+            [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ? AND user_id = ?', [req.params.id, req.auth.user_id]);
+            if (!old_post[0]) return res.status(401).json({ error: 'Post doesn\'t exists or doesn\'t belong to user' })
+        }
+        else {
+            [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ?', [req.params.id]);
+        }
         // If the modification contains a new image and the old post already had one, delete it from server
         if (req.file && old_post[0].image_url) {
             const filename = old_post[0].image_url.split('/images/')[1];
@@ -99,7 +103,7 @@ exports.modifyPost = async (req, res, next) => {
             ? { ...req.body, image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
             : { ...req.body };
         // Updates the new post
-        await mysql.query('UPDATE post SET text = ?, image_url = ? WHERE id = ?', [new_post.text, new_post.image_url, req.params.id]);
+        await mysql.query('UPDATE post SET name = ?, text = ?, image_url = ? WHERE id = ?', [new_post.name, new_post.text, new_post.image_url, req.params.id]);
         res.status(201).json({ message: 'Post modified!' });
     }
     catch (e) { res.status(500).json({ error: e.message }) }
@@ -113,9 +117,14 @@ exports.modifyPost = async (req, res, next) => {
  */
 exports.deletePost = async (req, res, next) => {
     try {
-        const [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ? AND user_id = ?', [req.params.id, req.auth.user_id]);
-        if (!old_post[0]) return res.status(401).json({ error: 'Post doesn\'t exists or doesn\'t belong to user' })
-
+        let [old_post, old_post_fields] = [];
+        if (req.auth.user_id !== 0) {
+            [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ? AND user_id = ?', [req.params.id, req.auth.user_id]);
+            if (!old_post[0]) return res.status(401).json({ error: 'Post doesn\'t exists or doesn\'t belong to user' })
+        }
+        else {
+            [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ?', [req.params.id]);
+        }
         // If the old post had an image, delete it from server
         if (old_post.image_url) {
             const filename = old_post.image_url.split('/images/')[1];

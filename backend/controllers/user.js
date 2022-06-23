@@ -32,11 +32,13 @@ exports.login = async (req, res, next) => {
         const valid = await bcrypt.compare(req.body.password, user[0].password);
 
         if (!valid) return res.status(401).json({ error: 'Wrong password!' })
+        const user_id = user[0].id;
+
         // Otherwise, sends authentification information
         res.status(200).json({
-            user_id: user[0].id,
+            user_id: user_id,
             token: jwt.sign(
-                { user_id: user[0].id },
+                { user_id: user_id },
                 process.env.APP_SECRET,
                 { expiresIn: '24h' }
             )

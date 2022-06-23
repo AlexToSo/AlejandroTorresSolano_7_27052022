@@ -1,5 +1,5 @@
 <template>
-    <PostFormItem :action="action" :message="message" @submitForm="onPost" />
+    <PostFormItem :action="action" :message="message" @submitForm="onModify" />
 </template>
 
 <script>
@@ -9,7 +9,7 @@ import router from '@/router'
 
 
 export default {
-    name: 'NewPostView',
+    name: 'ModifyPostView',
     components: {
         PostFormItem
     },
@@ -17,32 +17,29 @@ export default {
         return {
             message: "",
             image: undefined,
-            action: "New"
+            action: "Modify"
         }
     },
     computed: {
         ...mapState(['token'])
     },
     methods: {
-        async onPost(post) {
+        async onModify(post) {
+            const postId = this.$route.params.id;
             try {
-                // const formData = new FormData(this.postForm);
                 const formData = new FormData();
                 formData.append('name', JSON.stringify(post.name));
                 formData.append('text', JSON.stringify(post.text));
                 if (this.image) formData.append('image', this.image);
-                console.log(formData)
-                const response = await fetch('http://localhost:3000/api/posts', {
-                    method: 'POST',
+                const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+                    method: 'PUT',
                     headers: {
                         'Authorization': `token ${this.token}`
                     },
-                    // body: JSON.stringify({ name, text, user_id })
                     body: formData
                 });
                 let json = await response.json();
 
-                console.log(json);
                 if (json.error) throw json.error;
                 this.message = json.message;
 
