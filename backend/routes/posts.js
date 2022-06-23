@@ -16,9 +16,7 @@ router.get('/', auth, postsCtrl.getAllPosts);
 router.get('/:id', auth, postsCtrl.getOnePost);
 
 // Posts a post
-// router.post('/', auth, upload.single('image'), postsCtrl.createPost);
 router.post('/', auth, multer, postsCtrl.createPost);
-// router.post('/', multer, postsCtrl.createPost);
 
 // Posts a reaction
 router.post('/:id/like', auth, postsCtrl.createPostReaction);

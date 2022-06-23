@@ -31,8 +31,6 @@ export default {
     methods: {
         async onSignup(email, password) {
             try {
-                // Comment faire avec DOTENV
-                // this.errorMsg = process.env.API_URL + '/auth/signup';
                 const response = await fetch('http://localhost:3000/api/auth/signup', {
                     method: 'POST',
                     headers: {
@@ -47,8 +45,6 @@ export default {
                 this.message = json.message;
             }
             catch (error) { this.message = error }
-
-            // regex email
         }
     }
 }

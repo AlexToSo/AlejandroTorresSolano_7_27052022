@@ -51,9 +51,6 @@ export default {
                 router.push('posts');
             }
             catch (error) { this.message = error }
-
-            // input type = field ==> vue input field
-            // regex email
         }
     }
 }
