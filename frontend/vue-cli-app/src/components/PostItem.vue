@@ -12,7 +12,7 @@
                 </div>
                 <div v-if="showLike" class="heart">
                     <i v-if="!liked" class="far fa-heart" @click="addReaction(1)"></i>
-                    <i v-else class="fas fa-heart" @click="addReaction(0)"></i>
+                    <i v-else class="fas fa-heart red" @click="addReaction(0)"></i>
                 </div>
             </div>
         </router-link>
@@ -71,41 +71,6 @@ export default {
 </script>
 
 <style lang="scss">
-// .post-prev {
-//     margin: 3rem 0 3rem 0;
-//     background-color: white;
-//     overflow: hidden;
-//     border-radius: 1rem;
-//     border: 0.5rem solid #FFD7D7;
-//     box-shadow: 0 0.5rem 2rem #656565;
-
-//     &__image {
-//         height: 30rem;
-//         overflow: hidden;
-//         position: relative;
-
-//         & img {
-//             position: absolute;
-//             top: 50%;
-//             left: 50%;
-//             transform: translate(-50%, -50%);
-//         }
-//     }
-
-//     &__text {
-//         padding: 2rem;
-//         position: relative;
-//         overflow: hidden;
-
-//         h2,
-//         p {
-//             white-space: nowrap;
-//             overflow: hidden;
-//             text-overflow: ellipsis;
-//         }
-//     }
-// }
-
 .post-prev {
     width: 80%;
     background-color: white;
@@ -120,5 +85,9 @@ export default {
         text-align: center;
         padding: 10px 20px;
     }
+}
+
+.red {
+    color: red;
 }
 </style>
