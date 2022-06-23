@@ -16,6 +16,6 @@ module.exports = (req, res, next) => {
         if (req.body.user_id && req.body.user_id !== user_id) throw 'Invalid user ID';
         next();
     } catch (error) {
-        res.status(403).json({ error });
+        res.status(401).json({ error });
     }
 };

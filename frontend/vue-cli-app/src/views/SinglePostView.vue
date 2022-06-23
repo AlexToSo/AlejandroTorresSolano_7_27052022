@@ -17,7 +17,7 @@
 
 <script>
 import PostItem from "../components/PostItem"
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import router from '@/router'
 
 export default {
@@ -42,6 +42,7 @@ export default {
         ...mapState(['token', 'user_id'])
     },
     methods: {
+        ...mapActions(["onLogout"]),
         async onDelete() {
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${this.token}`);
@@ -50,10 +51,15 @@ export default {
                     method: 'DELETE',
                     headers: myHeaders,
                 });
-                const json = await response.json();
 
-                if (json.error) throw json.error;
-                this.message = json.message;
+                if (response.status === 401) this.onLogout();
+                else {
+                    const json = await response.json();
+
+                    if (json.error) throw json.error;
+                    this.message = json.message;
+                }
+
             }
             catch (error) { this.message = error }
         },
@@ -71,11 +77,15 @@ export default {
                     },
                     body: JSON.stringify({ like })
                 });
-                let json = await response.json();
 
-                if (json.error) throw json.error;
-                this.message = json.message;
-                this.onGetPost();
+                if (response.status === 401) this.onLogout();
+                else {
+                    let json = await response.json();
+
+                    if (json.error) throw json.error;
+                    this.message = json.message;
+                    this.onGetPost();
+                }
             }
             catch (error) { this.message = error }
         },
@@ -88,8 +98,12 @@ export default {
                     method: 'GET',
                     headers: myHeaders,
                 });
-                this.post = await response.json();
-                if (this.post.error) throw this.post.error;
+
+                if (response.status === 401) this.onLogout();
+                else {
+                    this.post = await response.json();
+                    if (this.post.error) throw this.post.error;
+                }
             }
             catch (error) { this.message = error }
         }
@@ -98,15 +112,3 @@ export default {
 
 }
 </script>
-
-<!-- <style lang="scss">
-.posts {
-    width: 90%;
-    max-width: 40rem;
-    &__list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
-</style> -->

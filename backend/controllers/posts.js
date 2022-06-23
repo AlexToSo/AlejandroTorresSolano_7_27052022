@@ -41,12 +41,9 @@ exports.getOnePost = async (req, res, next) => {
  * @param { Method } next
  */
 exports.createPost = async (req, res, next) => {
-    const postObject = req.body.image
-        // const postObject = false
-        // ? { ...JSON.parse(req.body.post), image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
+    const postObject = req.file
         ? { ...req.body, image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
         : { ...req.body };
-
     try {
         await mysql.query('INSERT INTO post (`name`, `text`, `image_url`, `user_id`) VALUES (?, ?, ?, ?);', [postObject.name, postObject.text, postObject.image_url, req.auth.user_id]);
         res.status(200).json({ message: 'Post saved!' });
@@ -99,7 +96,6 @@ exports.modifyPost = async (req, res, next) => {
 
         // Creates a new post object to update it 
         const new_post = req.file
-            // ? { ...JSON.parse(req.body.post), image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
             ? { ...req.body, image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
             : { ...req.body };
         // Updates the new post
@@ -126,8 +122,8 @@ exports.deletePost = async (req, res, next) => {
             [old_post, old_post_fields] = await mysql.query('SELECT * FROM post WHERE id = ?', [req.params.id]);
         }
         // If the old post had an image, delete it from server
-        if (old_post.image_url) {
-            const filename = old_post.image_url.split('/images/')[1];
+        if (old_post[0].image_url) {
+            const filename = old_post[0].image_url.split('/images/')[1];
             fs.unlinkSync(`images/${filename}`);
         }
 

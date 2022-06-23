@@ -4,7 +4,7 @@
 
 <script>
 import PostFormItem from "../components/PostFormItem"
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import router from '@/router'
 
 
@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             message: "",
-            image: undefined,
+            // image: undefined,
             action: "New"
         }
     },
@@ -24,34 +24,33 @@ export default {
         ...mapState(['token'])
     },
     methods: {
+        ...mapActions(["onLogout"]),
         async onPost(post) {
             try {
-                // const formData = new FormData(this.postForm);
                 const formData = new FormData();
-                formData.append('name', JSON.stringify(post.name));
-                formData.append('text', JSON.stringify(post.text));
-                if (this.image) formData.append('image', this.image);
-                console.log(formData)
+                formData.append('name', post.name);
+                formData.append('text', post.text);
+                if (post.image) formData.append('image', post.image);
                 const response = await fetch('http://localhost:3000/api/posts', {
                     method: 'POST',
                     headers: {
                         'Authorization': `token ${this.token}`
                     },
-                    // body: JSON.stringify({ name, text, user_id })
                     body: formData
                 });
-                let json = await response.json();
 
-                console.log(json);
-                if (json.error) throw json.error;
-                this.message = json.message;
+                if (response.status === 401) this.onLogout();
+                else {
+                    let json = await response.json();
 
-                router.push('posts');
+                    if (json.error) throw json.error;
+                    this.message = json.message;
+
+                    router.push('posts');
+                }
+
             }
             catch (error) { this.message = error }
-        },
-        onChange(e) {
-            this.image = e.target.files;
         }
     }
 }

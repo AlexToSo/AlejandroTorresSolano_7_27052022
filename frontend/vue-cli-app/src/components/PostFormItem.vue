@@ -1,7 +1,7 @@
 <template>
     <section class="post-edition">
         <h1> {{ action }} post </h1>
-        <form id="postForm" @submit.prevent="onSubmit(name, text)" enctype="multipart/form-data">
+        <form id="postForm" @submit.prevent="onSubmit(name, text, image)" enctype="multipart/form-data">
             <!-- <form action="http://localhost:3000/api/posts" enctype="multipart/form-data" method="post"> -->
             <div class="form-group">
                 <label for="name">Post name</label>
@@ -28,7 +28,8 @@ export default {
         return {
             validForm: true,
             name: "",
-            text: ""
+            text: "",
+            image: undefined
         }
     },
     props: {
@@ -42,8 +43,11 @@ export default {
         }
     },
     methods: {
-        onSubmit(name, text) {
-            this.$emit('submitForm', { name, text })
+        onSubmit(name, text, image) {
+            this.$emit('submitForm', { name, text, image})
+        },
+        onChange(e) {
+            this.image = e.target.files[0];
         }
     }
 }
