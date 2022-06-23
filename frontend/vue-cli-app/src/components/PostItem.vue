@@ -21,7 +21,6 @@
 
 <script>
 import { mapState } from 'vuex'
-// import router from '@/router'
 
 export default {
     name: 'PostItem',
